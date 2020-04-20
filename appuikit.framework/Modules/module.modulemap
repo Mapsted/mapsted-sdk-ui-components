@@ -1,0 +1,4 @@
+framework module appuikit {
+  header "appuikit-Swift.h"
+  requires objc
+}
