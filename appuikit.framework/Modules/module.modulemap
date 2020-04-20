@@ -1,4 +1,11 @@
 framework module appuikit {
-  header "appuikit-Swift.h"
-  requires objc
+  umbrella header "appuikit.h"
+
+  export *
+  module * { export * }
+}
+
+module appuikit.Swift {
+    header "appuikit-Swift.h"
+    requires objc
 }
