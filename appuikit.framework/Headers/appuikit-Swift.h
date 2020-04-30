@@ -277,6 +277,7 @@ SWIFT_CLASS("_TtC8appuikit18BaseViewController")
 
 
 
+/// View controller to show list of categories in a horizontal scrollable list.
 SWIFT_CLASS("_TtC8appuikit30CategoryCarouselViewController")
 @interface CategoryCarouselViewController : UIViewController
 - (void)viewDidLoad;
@@ -309,6 +310,13 @@ SWIFT_CLASS("_TtC8appuikit30CategoryCarouselViewController")
 @end
 
 
+SWIFT_CLASS("_TtC8appuikit21CategoryTreeViewModel")
+@interface CategoryTreeViewModel : NSObject
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
 SWIFT_CLASS("_TtC8appuikit23ComActionViewController")
 @interface ComActionViewController : BaseViewController
 - (void)viewDidLoad;
@@ -327,16 +335,16 @@ SWIFT_CLASS("_TtC8appuikit19ComTabBarController")
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
 @end
 
-
-
-
-
 @class UITabBar;
 @class UITabBarItem;
 
 @interface ComTabBarController (SWIFT_EXTENSION(appuikit)) <UITabBarControllerDelegate>
 - (void)tabBar:(UITabBar * _Nonnull)tabBar didSelectItem:(UITabBarItem * _Nonnull)item;
 @end
+
+
+
+
 
 
 
@@ -349,7 +357,7 @@ SWIFT_CLASS("_TtC8appuikit17ContactsViewModel")
 @class NSEntityDescription;
 @class NSManagedObjectContext;
 
-SWIFT_CLASS_NAMED("DisclaimerMessage")
+SWIFT_CLASS("_TtC8appuikit17DisclaimerMessage")
 @interface DisclaimerMessage : NSManagedObject
 - (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
 @end
@@ -405,6 +413,7 @@ SWIFT_CLASS("_TtC8appuikit17DropDownTextField")
 @class UIView;
 @class UIStoryboardSegue;
 
+/// View controller to show list of stores for a selected category
 SWIFT_CLASS("_TtC8appuikit21ExploreViewController")
 @interface ExploreViewController : ComActionViewController
 - (void)viewDidLoad;
@@ -546,6 +555,8 @@ SWIFT_CLASS("_TtC8appuikit18HomeViewController")
 
 
 
+
+
 @interface HomeViewController (SWIFT_EXTENSION(appuikit)) <UISearchBarDelegate>
 - (void)searchBarTextDidBeginEditing:(UISearchBar * _Nonnull)searchBar;
 - (void)searchBar:(UISearchBar * _Nonnull)searchBar textDidChange:(NSString * _Nonnull)searchText;
@@ -596,41 +607,6 @@ SWIFT_CLASS("_TtC8appuikit13HomeViewModel")
 
 
 
-
-/// This collection view is a container that displays and manages keywords
-SWIFT_CLASS("_TtC8appuikit16KWCollectionView")
-@interface KWCollectionView : UIViewController
-- (void)viewDidLoad;
-- (void)viewDidLayoutSubviews;
-- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
-- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
-@end
-
-
-
-
-@interface KWCollectionView (SWIFT_EXTENSION(appuikit)) <UICollectionViewDelegate>
-- (void)collectionView:(UICollectionView * _Nonnull)collectionView willDisplayCell:(UICollectionViewCell * _Nonnull)cell forItemAtIndexPath:(NSIndexPath * _Nonnull)indexPath;
-@end
-
-
-@interface KWCollectionView (SWIFT_EXTENSION(appuikit)) <UICollectionViewDataSource>
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView * _Nonnull)collectionView SWIFT_WARN_UNUSED_RESULT;
-- (NSInteger)collectionView:(UICollectionView * _Nonnull)collectionView numberOfItemsInSection:(NSInteger)section SWIFT_WARN_UNUSED_RESULT;
-- (UICollectionViewCell * _Nonnull)collectionView:(UICollectionView * _Nonnull)collectionView cellForItemAtIndexPath:(NSIndexPath * _Nonnull)indexPath SWIFT_WARN_UNUSED_RESULT;
-@end
-
-
-
-
-/// This text field can be used to create new tags (send them to a receiver) or filter tags in a (sender) collection of tags
-SWIFT_CLASS("_TtC8appuikit11KWTextField")
-@interface KWTextField : UITextField
-- (void)awakeFromNib;
-- (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
-- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
-@end
-
 @class UICollectionViewLayoutAttributes;
 
 SWIFT_CLASS("_TtC8appuikit17KeywordCellLayout")
@@ -661,7 +637,7 @@ SWIFT_CLASS("_TtC8appuikit17MapViewController")
 @end
 
 
-SWIFT_CLASS_NAMED("PropertyMessageMap")
+SWIFT_CLASS("_TtC8appuikit18PropertyMessageMap")
 @interface PropertyMessageMap : NSManagedObject
 - (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
 @end
@@ -744,7 +720,7 @@ SWIFT_CLASS("_TtC8appuikit14StartViewModel")
 @end
 
 
-SWIFT_CLASS_NAMED("Tag")
+SWIFT_CLASS("_TtC8appuikit3Tag")
 @interface Tag : NSManagedObject
 - (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
 @end
