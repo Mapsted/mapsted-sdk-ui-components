@@ -1,0 +1,4 @@
+framework module uicomponents {
+  header "uicomponents-Swift.h"
+  requires objc
+}
