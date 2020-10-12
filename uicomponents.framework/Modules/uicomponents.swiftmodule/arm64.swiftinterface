@@ -1,0 +1,617 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.3 (swiftlang-1200.0.29.2 clang-1200.0.30.1)
+// swift-module-flags: -target arm64-apple-ios12.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name uicomponents
+import Alamofire
+import Alamofire_Synchronous
+import AuthenticationServices
+import CocoaLumberjack
+import CocoaMQTT
+import ColorThiefSwift
+import Contacts
+import CoreBluetooth
+import CoreData
+import CoreGraphics
+import FBSDKLoginKit
+import FacebookLogin
+import FlagPhoneNumber
+import Foundation
+import GoogleSignIn
+import MapstedCore
+import MapstedMap
+import MapstedMapUi
+import MessageUI
+import StoreKit
+import Swift
+import SystemConfiguration
+import UIKit
+import os.log
+import os
+@objc @_inheritsConvenienceInitializers open class FavoritesViewModel : ObjectiveC.NSObject {
+  @objc override dynamic public init()
+  @objc deinit
+}
+extension FavoritesViewModel {
+  public func loadData()
+  public var maxAttempts: Swift.Int {
+    get
+  }
+  public func werePropertiesDownloaded(_ propertyList: [__ObjC.MNPropertyInfo])
+  public func loadProperties()
+  public var loadRootCategories: Swift.Bool {
+    get
+  }
+  public var loadChildCategories: Swift.Bool {
+    get
+  }
+  public func search(text: Swift.String)
+  @objc dynamic public func updateSearchResult(searchText: Swift.String)
+  public func getMalls(text: Swift.String)
+  public func getStores(text: Swift.String)
+  @objc dynamic public func singleSearch(text: Swift.String)
+}
+@objc @_inheritsConvenienceInitializers public class StartViewController : uicomponents.ComActionViewController {
+  @objc override dynamic open func viewDidLoad()
+  @objc deinit
+  @objc override dynamic open func viewDidAppear(_ animated: Swift.Bool)
+  @objc override dynamic open func viewWillAppear(_ animated: Swift.Bool)
+  @objc override dynamic open func tableView(_ tableView: UIKit.UITableView, willDisplay cell: UIKit.UITableViewCell, forRowAt indexPath: Foundation.IndexPath)
+  @objc override dynamic open func numberOfSections(in tableView: UIKit.UITableView) -> Swift.Int
+  @objc override dynamic open func tableView(_ tableView: UIKit.UITableView, numberOfRowsInSection section: Swift.Int) -> Swift.Int
+  @objc override dynamic open func tableView(_ tableView: UIKit.UITableView, viewForHeaderInSection section: Swift.Int) -> UIKit.UIView?
+  @objc override dynamic open func tableView(_ tableView: UIKit.UITableView, heightForHeaderInSection section: Swift.Int) -> CoreGraphics.CGFloat
+  @objc override dynamic open func tableView(_ tableView: UIKit.UITableView, heightForFooterInSection section: Swift.Int) -> CoreGraphics.CGFloat
+  @objc override dynamic open func tableView(_ tableView: UIKit.UITableView, viewForFooterInSection section: Swift.Int) -> UIKit.UIView?
+  @objc override dynamic open func tableView(_ tableView: UIKit.UITableView, cellForRowAt indexPath: Foundation.IndexPath) -> UIKit.UITableViewCell
+  @objc override dynamic open func tableView(_ tableView: UIKit.UITableView, heightForRowAt indexPath: Foundation.IndexPath) -> CoreGraphics.CGFloat
+  @objc override dynamic open func tableView(_ tableView: UIKit.UITableView, didSelectRowAt indexPath: Foundation.IndexPath)
+  @objc override dynamic open func prepare(for segue: UIKit.UIStoryboardSegue, sender: Any?)
+  @objc override dynamic public init(style: UIKit.UITableView.Style)
+  @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+}
+extension StartViewController : UIKit.UISearchBarDelegate {
+  @objc dynamic public func searchBarTextDidBeginEditing(_ searchBar: UIKit.UISearchBar)
+  @objc dynamic public func searchBar(_ searchBar: UIKit.UISearchBar, textDidChange searchText: Swift.String)
+  @objc dynamic public func searchBarTextDidEndEditing(_ searchBar: UIKit.UISearchBar)
+  @objc dynamic public func searchBarCancelButtonClicked(_ searchBar: UIKit.UISearchBar)
+  @objc dynamic public func searchBarSearchButtonClicked(_ searchBar: UIKit.UISearchBar)
+}
+extension StartViewController : MapstedCore.MNPositionDelegate {
+  public func onPositionChangeWithAnimation(encrypted: __ObjC.MNPosition, begin: Swift.Bool)
+  public func onPositionChange(encrypted: __ObjC.MNPosition)
+  public func addNearbyProperties(propertyIds: Swift.Set<Swift.Int>)
+  public func removeNearbyProperties(propertyIds: Swift.Set<Swift.Int>)
+  public func setPositionVisibility(visible: Swift.Bool)
+}
+@objc @_inheritsConvenienceInitializers open class ContactsViewModel : ObjectiveC.NSObject {
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers open class DropDownTextField : UIKit.UITextField {
+  public var selectedIndex: Swift.Int?
+  @objc @IBInspectable public var rowHeight: CoreGraphics.CGFloat
+  @objc @IBInspectable public var rowBackgroundColor: UIKit.UIColor
+  @objc @IBInspectable public var selectedRowColor: UIKit.UIColor
+  @objc @IBInspectable public var hideOptionsWhenSelect: Swift.Bool
+  @objc @IBInspectable public var isSearchEnable: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable public var borderColor: UIKit.UIColor {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable public var listHeight: CoreGraphics.CGFloat {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable public var borderWidth: CoreGraphics.CGFloat {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable public var cornerRadius: CoreGraphics.CGFloat {
+    @objc get
+    @objc set
+  }
+  public var optionArray: [Swift.String] {
+    get
+    set
+  }
+  public var optionImageArray: [UIKit.UIImage] {
+    get
+    set
+  }
+  public var optionIds: [Swift.String]?
+  @objc @IBInspectable public var arrowSize: CoreGraphics.CGFloat {
+    @objc get
+    @objc set
+  }
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc required dynamic public init(coder aDecoder: Foundation.NSCoder)
+  public func showList()
+  public func hideList()
+  @objc public func touchAction()
+  public func didSelect(completion: @escaping (Swift.String, Swift.Int, Swift.String) -> ())
+  public func listWillAppear(completion: @escaping () -> ())
+  public func listDidAppear(completion: @escaping () -> ())
+  public func listWillDisappear(completion: @escaping () -> ())
+  public func listDidDisappear(completion: @escaping () -> ())
+  @objc deinit
+}
+extension DropDownTextField : UIKit.UITextFieldDelegate {
+  @objc dynamic public func textFieldShouldReturn(_ textField: UIKit.UITextField) -> Swift.Bool
+  @objc dynamic public func textFieldDidBeginEditing(_ textField: UIKit.UITextField)
+  @objc dynamic public func textFieldShouldBeginEditing(_ textField: UIKit.UITextField) -> Swift.Bool
+  @objc dynamic public func textField(_ textField: UIKit.UITextField, shouldChangeCharactersIn range: Foundation.NSRange, replacementString string: Swift.String) -> Swift.Bool
+}
+extension DropDownTextField : UIKit.UITableViewDataSource {
+  @objc dynamic public func tableView(_ tableView: UIKit.UITableView, numberOfRowsInSection section: Swift.Int) -> Swift.Int
+  @objc dynamic public func tableView(_ tableView: UIKit.UITableView, cellForRowAt indexPath: Foundation.IndexPath) -> UIKit.UITableViewCell
+}
+extension DropDownTextField : UIKit.UITableViewDelegate {
+  @objc dynamic public func tableView(_ tableView: UIKit.UITableView, didSelectRowAt indexPath: Foundation.IndexPath)
+}
+public class ZoneItem : Swift.Codable {
+  @objc deinit
+  required public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public let home_model: uicomponents.HomeViewModel
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers open class HomeViewModel : uicomponents.SharedViewModel {
+  @objc deinit
+}
+extension HomeViewModel {
+  public func search(text: Swift.String)
+  @objc dynamic public func singleSearch(text: Swift.String)
+  public func updateMall(mall: __ObjC.MNPropertyInfo?)
+}
+extension KeywordCellLayout {
+  public struct LayoutInfo {
+  }
+}
+@_hasMissingDesignatedInitializers open class ThemeManager {
+  public func applyTheme()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class HomeViewController : uicomponents.ComActionViewController {
+  @objc override dynamic public func viewDidLoad()
+  @objc override dynamic public func viewWillAppear(_ animated: Swift.Bool)
+  @objc override dynamic public func viewDidAppear(_ animated: Swift.Bool)
+  @objc override dynamic public func viewWillDisappear(_ animated: Swift.Bool)
+  @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, cellForRowAt indexPath: Foundation.IndexPath) -> UIKit.UITableViewCell
+  @objc override dynamic public func prepare(for segue: UIKit.UIStoryboardSegue, sender: Any?)
+  @objc deinit
+  @objc override dynamic public init(style: UIKit.UITableView.Style)
+  @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+}
+extension HomeViewController {
+  @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, willDisplay cell: UIKit.UITableViewCell, forRowAt indexPath: Foundation.IndexPath)
+  @objc override dynamic public func numberOfSections(in tableView: UIKit.UITableView) -> Swift.Int
+  @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, numberOfRowsInSection section: Swift.Int) -> Swift.Int
+  @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, heightForFooterInSection section: Swift.Int) -> CoreGraphics.CGFloat
+  @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, viewForHeaderInSection section: Swift.Int) -> UIKit.UIView?
+  @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, heightForHeaderInSection section: Swift.Int) -> CoreGraphics.CGFloat
+  @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, heightForRowAt indexPath: Foundation.IndexPath) -> CoreGraphics.CGFloat
+  @objc override dynamic open func tableView(_ tableView: UIKit.UITableView, didSelectRowAt indexPath: Foundation.IndexPath)
+}
+extension HomeViewController : UIKit.UISearchBarDelegate {
+  @objc dynamic public func searchBarTextDidBeginEditing(_ searchBar: UIKit.UISearchBar)
+  @objc dynamic public func searchBar(_ searchBar: UIKit.UISearchBar, textDidChange searchText: Swift.String)
+  @objc dynamic public func searchBarTextDidEndEditing(_ searchBar: UIKit.UISearchBar)
+  @objc dynamic public func searchBarCancelButtonClicked(_ searchBar: UIKit.UISearchBar)
+  @objc dynamic public func searchBarSearchButtonClicked(_ searchBar: UIKit.UISearchBar)
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class CategoryTreeViewModel : ObjectiveC.NSObject {
+  public static let shared: uicomponents.CategoryTreeViewModel
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @IBDesignable open class BadgeNumberLabel : UIKit.UILabel {
+  @objc @IBInspectable open var badgeColor: UIKit.UIColor {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var borderWidth: CoreGraphics.CGFloat {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var borderColor: UIKit.UIColor {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var insets: CoreGraphics.CGSize {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var shadowOpacityBadge: CoreGraphics.CGFloat {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var shadowRadiusBadge: CoreGraphics.CGFloat {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var shadowColorBadge: UIKit.UIColor {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var shadowOffsetBadge: CoreGraphics.CGSize {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var cornerRadius: CoreGraphics.CGFloat {
+    @objc get
+    @objc set
+  }
+  @objc convenience dynamic public init()
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  @objc override dynamic open func textRect(forBounds bounds: CoreGraphics.CGRect, limitedToNumberOfLines numberOfLines: Swift.Int) -> CoreGraphics.CGRect
+  @objc override dynamic open func drawText(in rect: CoreGraphics.CGRect)
+  @objc override dynamic open func draw(_ rect: CoreGraphics.CGRect)
+  @available(iOS 8.0, *)
+  @objc override dynamic open func prepareForInterfaceBuilder()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class KeywordCellLayout : UIKit.UICollectionViewLayout {
+  public init(alignment: uicomponents.KeywordCellLayout.LayoutAlignment = .left, delegate: uicomponents.KeywordCellLayoutDelegate?)
+  @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  @objc override dynamic public func prepare()
+  @objc override dynamic public func layoutAttributesForItem(at indexPath: Foundation.IndexPath) -> UIKit.UICollectionViewLayoutAttributes?
+  @objc override dynamic public func layoutAttributesForElements(in rect: CoreGraphics.CGRect) -> [UIKit.UICollectionViewLayoutAttributes]?
+  @objc override dynamic public var collectionViewContentSize: CoreGraphics.CGSize {
+    @objc get
+  }
+  @objc deinit
+}
+public protocol CategorySelectionDelegate {
+  func selectedCategory(category: __ObjC.MNCategory)
+}
+@objc @_inheritsConvenienceInitializers public class CategoryCarouselViewController : UIKit.UIViewController {
+  public static func instantiateViewController(propertyInfo: __ObjC.MNPropertyInfo, categoryUIDs: [Swift.String], alignmentIsVertical: Swift.Bool = false, delegate: uicomponents.CategorySelectionDelegate) -> UIKit.UIViewController?
+  public func setCategoryTextColor(color: UIKit.UIColor)
+  @objc override dynamic public func viewDidLoad()
+  @objc override dynamic public func didMove(toParent parent: UIKit.UIViewController?)
+  @objc deinit
+  @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+}
+extension CategoryCarouselViewController : UIKit.UICollectionViewDelegate {
+  @objc dynamic public func collectionView(_ collectionView: UIKit.UICollectionView, didSelectItemAt indexPath: Foundation.IndexPath)
+}
+extension CategoryCarouselViewController : UIKit.UICollectionViewDataSource {
+  @objc dynamic public func numberOfSections(in collectionView: UIKit.UICollectionView) -> Swift.Int
+  @objc dynamic public func collectionView(_ collectionView: UIKit.UICollectionView, numberOfItemsInSection section: Swift.Int) -> Swift.Int
+  @objc dynamic public func collectionView(_ collectionView: UIKit.UICollectionView, cellForItemAt indexPath: Foundation.IndexPath) -> UIKit.UICollectionViewCell
+}
+extension CategoryCarouselViewController : UIKit.UICollectionViewDelegateFlowLayout {
+  @objc dynamic public func collectionView(_ collectionView: UIKit.UICollectionView, layout collectionViewLayout: UIKit.UICollectionViewLayout, sizeForItemAt indexPath: Foundation.IndexPath) -> CoreGraphics.CGSize
+  @objc dynamic public func collectionView(_ collectionView: UIKit.UICollectionView, layout collectionViewLayout: UIKit.UICollectionViewLayout, insetForSectionAt section: Swift.Int) -> UIKit.UIEdgeInsets
+  @objc dynamic public func collectionView(_ collectionView: UIKit.UICollectionView, layout collectionViewLayout: UIKit.UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Swift.Int) -> CoreGraphics.CGFloat
+  @objc dynamic public func collectionView(_ collectionView: UIKit.UICollectionView, layout collectionViewLayout: UIKit.UICollectionViewLayout, minimumLineSpacingForSectionAt section: Swift.Int) -> CoreGraphics.CGFloat
+}
+@objc @_inheritsConvenienceInitializers public class FeedViewController : uicomponents.ComActionViewController {
+  @objc override dynamic public func viewDidLoad()
+  @objc override dynamic public func viewWillAppear(_ animated: Swift.Bool)
+  @objc override dynamic public func viewDidAppear(_ animated: Swift.Bool)
+  @objc override dynamic public func viewDidDisappear(_ animated: Swift.Bool)
+  @objc override dynamic public func numberOfSections(in tableView: UIKit.UITableView) -> Swift.Int
+  @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, numberOfRowsInSection section: Swift.Int) -> Swift.Int
+  @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, cellForRowAt indexPath: Foundation.IndexPath) -> UIKit.UITableViewCell
+  @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, heightForRowAt indexPath: Foundation.IndexPath) -> CoreGraphics.CGFloat
+  @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, didSelectRowAt indexPath: Foundation.IndexPath)
+  @objc override dynamic public func prepare(for segue: UIKit.UIStoryboardSegue, sender: Any?)
+  @objc deinit
+  @objc override dynamic public init(style: UIKit.UITableView.Style)
+  @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+}
+extension FeedViewController {
+  public func keywordIsBeingAdded(name: uicomponents.Category?)
+  public func keywordIsBeingRemoved(name: uicomponents.Category?)
+}
+extension UIDevice {
+  public static let modelName: Swift.String
+}
+@objc @_inheritsConvenienceInitializers @IBDesignable open class HTMLLabel : UIKit.UILabel {
+  @objc deinit
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+}
+extension UIImage {
+  convenience public init?(color: UIKit.UIColor, size: CoreGraphics.CGSize = CGSize(width: 1, height: 1))
+}
+extension KeywordCellLayout {
+  public enum LayoutAlignment : Swift.Int {
+    case left
+    case center
+    case right
+    public typealias RawValue = Swift.Int
+    public init?(rawValue: Swift.Int)
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+}
+public class Category {
+  public init(category: __ObjC.MNCategory)
+  public func loadStores(completed: (([uicomponents.StoreItem]) -> ())?)
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers open class StartViewModel : uicomponents.SharedViewModel {
+  @objc override dynamic public init()
+  @objc deinit
+}
+public protocol KeywordCellLayoutDelegate : ObjectiveC.NSObjectProtocol {
+  func keywordCellLayoutTagSize(layout: uicomponents.KeywordCellLayout, atIndex index: Swift.Int) -> CoreGraphics.CGSize
+  func keywordCellLayoutInteritemHorizontalSpacing(layout: uicomponents.KeywordCellLayout) -> CoreGraphics.CGFloat
+  func keywordCellLayoutInteritemVerticalSpacing(layout: uicomponents.KeywordCellLayout) -> CoreGraphics.CGFloat
+}
+@objc @_inheritsConvenienceInitializers public class ComActionViewController : uicomponents.BaseViewController {
+  @objc override dynamic open func viewDidLoad()
+  @objc override dynamic open func viewWillAppear(_ animated: Swift.Bool)
+  @objc override dynamic public init(style: UIKit.UITableView.Style)
+  @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class MapViewController : UIKit.UIViewController {
+  public static func instantiateViewController(delegate: uicomponents.ComTabBarController?) -> UIKit.UIViewController?
+  @objc override dynamic public func viewDidLoad()
+  @objc override dynamic public func viewWillAppear(_ animated: Swift.Bool)
+  @objc override dynamic public func prepare(for segue: UIKit.UIStoryboardSegue, sender: Any?)
+  public func showLoadingSpinner(text: Swift.String)
+  public func hideLoadingSpinner()
+  public func selectAndDrawProperty(propertyId: Swift.Int, callback: @escaping ((Swift.Bool) -> Swift.Void))
+  public func displayPropertyOnMap()
+  public func displayPropertyOnMap(propertyId: Swift.Int)
+  public func zoomToUserLocation()
+  @objc deinit
+  @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+}
+extension UIViewController {
+  public func add(_ child: UIKit.UIViewController, toView view: UIKit.UIView)
+  public func remove()
+}
+public struct FavoriteEntity {
+}
+@objc @_hasMissingDesignatedInitializers public class Region : ObjectiveC.NSObject, Foundation.NSCoding {
+  @objc public func encode(with coder: Foundation.NSCoder)
+  @objc required public init?(coder: Foundation.NSCoder)
+  @objc deinit
+  @objc override dynamic public init()
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers open class UIBoundaryCheckApi : ObjectiveC.NSObject {
+  public static let shared: uicomponents.UIBoundaryCheckApi
+  @objc deinit
+  public func boundaryCheck(launchOptions: [UIKit.UIApplication.LaunchOptionsKey : Any]?)
+  public func addBoundary(regionId: Swift.Int, polygons: [__ObjC.MNMercator]?, centroid: __ObjC.MNMercator?)
+  public func removeBoundary(regionId: Swift.Int)
+}
+extension UIBoundaryCheckApi : CoreLocation.CLLocationManagerDelegate {
+  @objc dynamic public func locationManager(_ manager: CoreLocation.CLLocationManager, didUpdateLocations locations: [CoreLocation.CLLocation])
+  @objc dynamic public func locationManager(_ manager: CoreLocation.CLLocationManager, didEnterRegion region: CoreLocation.CLRegion)
+  @objc dynamic public func locationManager(_ manager: CoreLocation.CLLocationManager, didExitRegion region: CoreLocation.CLRegion)
+  @objc dynamic public func locationManager(_ manager: CoreLocation.CLLocationManager, didVisit visit: CoreLocation.CLVisit)
+}
+public enum BaseMapStyle {
+  case DEFAULT
+  case DARK
+  case LIGHT
+  public static func == (a: uicomponents.BaseMapStyle, b: uicomponents.BaseMapStyle) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+  public func hash(into hasher: inout Swift.Hasher)
+}
+@_hasMissingDesignatedInitializers public class UICoreApi {
+  public static let shared: uicomponents.UICoreApi
+  public var enableFeedsOutdoor: Swift.Bool
+  public var enableFeedsIndoor: Swift.Bool
+  public var enableEventsOutdoor: Swift.Bool
+  public var enableEventsIndoor: Swift.Bool
+  public var enableBuildingsOutdoor: Swift.Bool
+  public var enableBuildingsIndoor: Swift.Bool
+  public var enableUserProfiles: Swift.Bool
+  public var useForCampus: Swift.Bool
+  public var useGeoJSONLayers: Swift.Bool
+  public var nameOfGeoJSONStyleAsset: Swift.String
+  public var baseMapStyle: uicomponents.BaseMapStyle
+  public func rootViewController() -> UIKit.UINavigationController
+  public func splashViewController(copyrightText: Swift.String, animationGif: Swift.String) -> UIKit.UIViewController
+  public func setupUI()
+  public func acceptShareLocation(response: UserNotifications.UNNotificationResponse)
+  public func denyShareLocation(response: UserNotifications.UNNotificationResponse)
+  @objc deinit
+}
+extension String {
+  public func localized(_ lang: Swift.String) -> Swift.String
+  public func localized() -> Swift.String
+}
+@objc @_inheritsConvenienceInitializers public class BaseViewController : UIKit.UITableViewController {
+  @objc override dynamic open func viewDidLoad()
+  @objc override dynamic open func viewWillAppear(_ animated: Swift.Bool)
+  @objc override dynamic public init(style: UIKit.UITableView.Style)
+  @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers open class NetworkUtils {
+  public static func requestGetSync(url: Swift.String, parameters: [Swift.String : Any]) -> Foundation.Data?
+  public static func requestGetAsync(url: Swift.String, parameters: [Swift.String : Any], completed: ((Foundation.Data?) -> ())? = nil)
+  public static func checkForceUpdate(versionCode: Swift.String, completion: @escaping ((Foundation.Data?, Foundation.URLResponse?, Swift.Error?) -> Swift.Void))
+  @objc deinit
+}
+extension NetworkUtils {
+  public static func saveDisclaimerAcceptance(propertyId: Swift.Int, deviceId: Swift.String, completion: @escaping ((Foundation.Data?, Foundation.URLResponse?, Swift.Error?) -> Swift.Void))
+}
+public protocol StoreSelectionDelegate {
+  func selectedStore(propertyId: Swift.Int, buildingId: Swift.Int, entityId: Swift.Int)
+}
+@objc @_inheritsConvenienceInitializers public class ExploreViewController : uicomponents.ComActionViewController {
+  public static func instantiateViewController(propertyInfo: __ObjC.MNPropertyInfo, category: __ObjC.MNCategory, selectStoreDelegate: uicomponents.StoreSelectionDelegate) -> UIKit.UIViewController?
+  @objc override dynamic public func viewDidLoad()
+  @objc override dynamic public func viewWillAppear(_ animated: Swift.Bool)
+  @objc override dynamic public func viewWillDisappear(_ animated: Swift.Bool)
+  @objc override dynamic public func numberOfSections(in tableView: UIKit.UITableView) -> Swift.Int
+  @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, numberOfRowsInSection section: Swift.Int) -> Swift.Int
+  @objc override dynamic public func scrollViewDidScroll(_ scrollView: UIKit.UIScrollView)
+  @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, cellForRowAt indexPath: Foundation.IndexPath) -> UIKit.UITableViewCell
+  @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, willDisplay cell: UIKit.UITableViewCell, forRowAt indexPath: Foundation.IndexPath)
+  @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, viewForHeaderInSection section: Swift.Int) -> UIKit.UIView?
+  @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, didSelectRowAt indexPath: Foundation.IndexPath)
+  @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, heightForRowAt indexPath: Foundation.IndexPath) -> CoreGraphics.CGFloat
+  @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, heightForHeaderInSection section: Swift.Int) -> CoreGraphics.CGFloat
+  @objc override dynamic public func prepare(for segue: UIKit.UIStoryboardSegue, sender: Any?)
+  @objc override dynamic public init(style: UIKit.UITableView.Style)
+  @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+extension ExploreViewController : UIKit.UISearchBarDelegate {
+  @objc dynamic public func searchBar(_ searchBar: UIKit.UISearchBar, textDidChange searchText: Swift.String)
+  @objc dynamic public func searchBarCancelButtonClicked(_ searchBar: UIKit.UISearchBar)
+  @objc dynamic public func searchBarSearchButtonClicked(_ searchBar: UIKit.UISearchBar)
+}
+@_hasMissingDesignatedInitializers open class MQTTConnectionInfo : Swift.Decodable {
+  @objc deinit
+  required public init(from decoder: Swift.Decoder) throws
+}
+@_hasMissingDesignatedInitializers open class MQTTConnection : Swift.Decodable {
+  @objc deinit
+  required public init(from decoder: Swift.Decoder) throws
+}
+@objc @_inheritsConvenienceInitializers public class ComTabBarController : UIKit.UITabBarController {
+  @objc override dynamic public func viewDidLoad()
+  @objc deinit
+  @objc override dynamic public func viewDidLayoutSubviews()
+  @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+}
+extension ComTabBarController : UIKit.UITabBarControllerDelegate {
+  @objc override dynamic public func tabBar(_ tabBar: UIKit.UITabBar, didSelect item: UIKit.UITabBarItem)
+}
+extension ComTabBarController : MapstedMapUi.MNFeedDelegate {
+  public func allFeed() -> [[Swift.String : Swift.String]]
+}
+extension ComTabBarController : MapstedMapUi.MNShareLocationDelegate {
+  public func shareLocationRequest(duration: Swift.Int)
+}
+extension ComTabBarController : MapstedMapUi.MNFeedbackDelegate {
+  public func sendFeedback()
+}
+@_hasMissingDesignatedInitializers public class Zone : Swift.Codable {
+  @objc deinit
+  required public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+@_hasMissingDesignatedInitializers public class StoreItem : Swift.Codable {
+  required public init(from decoder: Swift.Decoder) throws
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+}
+extension StoreItem : Swift.Comparable {
+  public static func < (lhs: uicomponents.StoreItem, rhs: uicomponents.StoreItem) -> Swift.Bool
+  public static func == (lhs: uicomponents.StoreItem, rhs: uicomponents.StoreItem) -> Swift.Bool
+}
+@objc @_inheritsConvenienceInitializers open class SharedViewModel : ObjectiveC.NSObject {
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @IBDesignable open class HeaderTitleLabel : UIKit.UILabel {
+  @objc convenience dynamic public init()
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  @objc override dynamic open var text: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class DisclaimerMessage : CoreData.NSManagedObject {
+  @objc override dynamic public init(entity: CoreData.NSEntityDescription, insertInto context: CoreData.NSManagedObjectContext?)
+  @objc deinit
+}
+extension DisclaimerMessage {
+  @nonobjc public class func fetchRequest() -> CoreData.NSFetchRequest<uicomponents.DisclaimerMessage>
+  @objc @NSManaged dynamic public var customMessage: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc @NSManaged dynamic public var messageAfter: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc @NSManaged dynamic public var messageBefore: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc @NSManaged dynamic public var messageId: Swift.Int32 {
+    @objc get
+    @objc set
+  }
+}
+@objc @_inheritsConvenienceInitializers public class PropertyMessageMap : CoreData.NSManagedObject {
+  @objc override dynamic public init(entity: CoreData.NSEntityDescription, insertInto context: CoreData.NSManagedObjectContext?)
+  @objc deinit
+}
+extension PropertyMessageMap {
+  @nonobjc public class func fetchRequest() -> CoreData.NSFetchRequest<uicomponents.PropertyMessageMap>
+  @objc @NSManaged dynamic public var isShown: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc @NSManaged dynamic public var isSyncedWithServer: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc @NSManaged dynamic public var messageId: Swift.Int32 {
+    @objc get
+    @objc set
+  }
+  @objc @NSManaged dynamic public var propertyId: Swift.Int32 {
+    @objc get
+    @objc set
+  }
+}
+@objc @_inheritsConvenienceInitializers public class Tag : CoreData.NSManagedObject {
+  @objc deinit
+  @objc override dynamic public init(entity: CoreData.NSEntityDescription, insertInto context: CoreData.NSManagedObjectContext?)
+}
+extension Tag {
+  @nonobjc public class func fetchRequest() -> CoreData.NSFetchRequest<uicomponents.Tag>
+  @objc @NSManaged dynamic public var buildingId: Swift.Int32 {
+    @objc get
+    @objc set
+  }
+  @objc @NSManaged dynamic public var floorId: Swift.Int32 {
+    @objc get
+    @objc set
+  }
+  @objc @NSManaged dynamic public var mercatorX: Swift.Double {
+    @objc get
+    @objc set
+  }
+  @objc @NSManaged dynamic public var mercatorY: Swift.Double {
+    @objc get
+    @objc set
+  }
+  @objc @NSManaged dynamic public var name: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc @NSManaged dynamic public var propertyId: Swift.Int32 {
+    @objc get
+    @objc set
+  }
+  @objc @NSManaged dynamic public var timestamp: Swift.Double {
+    @objc get
+    @objc set
+  }
+}
+extension uicomponents.KeywordCellLayout.LayoutAlignment : Swift.Equatable {}
+extension uicomponents.KeywordCellLayout.LayoutAlignment : Swift.Hashable {}
+extension uicomponents.KeywordCellLayout.LayoutAlignment : Swift.RawRepresentable {}
+extension uicomponents.BaseMapStyle : Swift.Equatable {}
+extension uicomponents.BaseMapStyle : Swift.Hashable {}
