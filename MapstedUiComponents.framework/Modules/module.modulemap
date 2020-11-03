@@ -1,0 +1,4 @@
+framework module MapstedUiComponents {
+  header "MapstedUiComponents-Swift.h"
+  requires objc
+}
