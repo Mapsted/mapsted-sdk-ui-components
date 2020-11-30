@@ -1,6 +1,6 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.3 (swiftlang-1200.0.29.2 clang-1200.0.30.1)
-// swift-module-flags: -target arm64-apple-ios12.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -module-name MapstedUiComponents
+// swift-compiler-version: Apple Swift version 5.3.1 (swiftlang-1200.0.41 clang-1200.0.32.8)
+// swift-module-flags: -target arm64-apple-ios12.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name MapstedUiComponents
 import Alamofire
 import Alamofire_Synchronous
 import AuthenticationServices
@@ -69,6 +69,10 @@ extension FavoritesViewModel {
   @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
   @objc required dynamic public init?(coder: Foundation.NSCoder)
 }
+extension StartViewController : MapstedUiComponents.MapstedSearchDelegate {
+  public func startSearch()
+  public func stopSearch()
+}
 extension StartViewController : UIKit.UISearchBarDelegate {
   @objc dynamic public func searchBarTextDidBeginEditing(_ searchBar: UIKit.UISearchBar)
   @objc dynamic public func searchBar(_ searchBar: UIKit.UISearchBar, textDidChange searchText: Swift.String)
@@ -95,36 +99,36 @@ extension StartViewController : MapstedCore.MNPositionDelegate {
   @objc @IBInspectable public var hideOptionsWhenSelect: Swift.Bool
   @objc @IBInspectable public var isSearchEnable: Swift.Bool {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @IBInspectable public var borderColor: UIKit.UIColor {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @IBInspectable public var listHeight: CoreGraphics.CGFloat {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @IBInspectable public var borderWidth: CoreGraphics.CGFloat {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @IBInspectable public var cornerRadius: CoreGraphics.CGFloat {
     @objc get
-    @objc set(value)
+    @objc set
   }
   public var optionArray: [Swift.String] {
     get
-    set(value)
+    set
   }
   public var optionImageArray: [UIKit.UIImage] {
     get
-    set(value)
+    set
   }
   public var optionIds: [Swift.String]?
   @objc @IBInspectable public var arrowSize: CoreGraphics.CGFloat {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc override dynamic public init(frame: CoreGraphics.CGRect)
   @objc required dynamic public init(coder aDecoder: Foundation.NSCoder)
@@ -156,7 +160,7 @@ public class ZoneItem : Swift.Codable {
   required public init(from decoder: Swift.Decoder) throws
   public func encode(to encoder: Swift.Encoder) throws
 }
-public var home_model: MapstedUiComponents.HomeViewModel
+public let home_model: MapstedUiComponents.HomeViewModel
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers open class HomeViewModel : MapstedUiComponents.SharedViewModel {
   @objc deinit
 }
@@ -203,47 +207,71 @@ extension HomeViewController : UIKit.UISearchBarDelegate {
   @objc dynamic public func searchBarSearchButtonClicked(_ searchBar: UIKit.UISearchBar)
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class CategoryTreeViewModel : ObjectiveC.NSObject {
-  public static var shared: MapstedUiComponents.CategoryTreeViewModel
+  public static let shared: MapstedUiComponents.CategoryTreeViewModel
+  @objc deinit
+}
+public protocol MapstedSearchDelegate {
+  func startSearch()
+  func stopSearch()
+}
+public enum SearchStyle {
+  case TitleAndButton
+  case SearchBoxAndButton
+  public static func == (a: MapstedUiComponents.SearchStyle, b: MapstedUiComponents.SearchStyle) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+  public func hash(into hasher: inout Swift.Hasher)
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class MapstedSearchView : UIKit.UIView {
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  public func setSearchBarDelegate(delegate: UIKit.UISearchBarDelegate)
+  public func setSearchStyle(to searchStyle: MapstedUiComponents.SearchStyle)
+  public func setTitle(to text: Swift.String?)
+  public func setMapstedSearchDelegate(delegate: MapstedUiComponents.MapstedSearchDelegate)
+  public func setSearchPlaceholder(toString placeholder: Swift.String)
+  public func hideSearch()
+  public func showSearch()
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @IBDesignable open class BadgeNumberLabel : UIKit.UILabel {
   @objc @IBInspectable open var badgeColor: UIKit.UIColor {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @IBInspectable open var borderWidth: CoreGraphics.CGFloat {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @IBInspectable open var borderColor: UIKit.UIColor {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @IBInspectable open var insets: CoreGraphics.CGSize {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @IBInspectable open var shadowOpacityBadge: CoreGraphics.CGFloat {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @IBInspectable open var shadowRadiusBadge: CoreGraphics.CGFloat {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @IBInspectable open var shadowColorBadge: UIKit.UIColor {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @IBInspectable open var shadowOffsetBadge: CoreGraphics.CGSize {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @IBInspectable open var cornerRadius: CoreGraphics.CGFloat {
     @objc get
-    @objc set(value)
+    @objc set
   }
-  @objc dynamic public convenience init()
+  @objc convenience dynamic public init()
   @objc override dynamic public init(frame: CoreGraphics.CGRect)
   @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
   @objc override dynamic open func textRect(forBounds bounds: CoreGraphics.CGRect, limitedToNumberOfLines numberOfLines: Swift.Int) -> CoreGraphics.CGRect
@@ -311,7 +339,7 @@ extension FeedViewController {
   public func keywordIsBeingRemoved(name: MapstedUiComponents.Category?)
 }
 extension UIDevice {
-  public static var modelName: Swift.String
+  public static let modelName: Swift.String
 }
 @objc @_inheritsConvenienceInitializers @IBDesignable open class HTMLLabel : UIKit.UILabel {
   @objc deinit
@@ -319,7 +347,7 @@ extension UIDevice {
   @objc required dynamic public init?(coder: Foundation.NSCoder)
 }
 extension UIImage {
-  public convenience init?(color: UIKit.UIColor, size: CoreGraphics.CGSize = CGSize(width: 1, height: 1))
+  convenience public init?(color: UIKit.UIColor, size: CoreGraphics.CGSize = CGSize(width: 1, height: 1))
 }
 extension KeywordCellLayout {
   public enum LayoutAlignment : Swift.Int {
@@ -350,10 +378,10 @@ public protocol KeywordCellLayoutDelegate : ObjectiveC.NSObjectProtocol {
 @objc @_inheritsConvenienceInitializers public class ComActionViewController : MapstedUiComponents.BaseViewController {
   @objc override dynamic open func viewDidLoad()
   @objc override dynamic open func viewWillAppear(_ animated: Swift.Bool)
-  @objc deinit
   @objc override dynamic public init(style: UIKit.UITableView.Style)
   @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
   @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
 }
 @objc @_inheritsConvenienceInitializers public class MapViewController : UIKit.UIViewController {
   public static func instantiateViewController(delegate: MapstedUiComponents.ComTabBarController?) -> UIKit.UIViewController?
@@ -383,7 +411,7 @@ public struct FavoriteEntity {
   @objc override dynamic public init()
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers open class UIBoundaryCheckApi : ObjectiveC.NSObject {
-  public static var shared: MapstedUiComponents.UIBoundaryCheckApi
+  public static let shared: MapstedUiComponents.UIBoundaryCheckApi
   @objc deinit
   public func boundaryCheck(launchOptions: [UIKit.UIApplication.LaunchOptionsKey : Any]?)
   public func addBoundary(regionId: Swift.Int, polygons: [__ObjC.MNMercator]?, centroid: __ObjC.MNMercator?)
@@ -406,7 +434,7 @@ public enum BaseMapStyle {
   public func hash(into hasher: inout Swift.Hasher)
 }
 @_hasMissingDesignatedInitializers public class UICoreApi {
-  public static var shared: MapstedUiComponents.UICoreApi
+  public static let shared: MapstedUiComponents.UICoreApi
   public var restrictPanningToProperty: Swift.Bool
   public var enableFeedsOutdoor: Swift.Bool
   public var enableFeedsIndoor: Swift.Bool
@@ -432,10 +460,10 @@ extension String {
 @objc @_inheritsConvenienceInitializers public class BaseViewController : UIKit.UITableViewController {
   @objc override dynamic open func viewDidLoad()
   @objc override dynamic open func viewWillAppear(_ animated: Swift.Bool)
-  @objc deinit
   @objc override dynamic public init(style: UIKit.UITableView.Style)
   @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
   @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
 }
 @_hasMissingDesignatedInitializers open class NetworkUtils {
   public static func requestGetSync(url: Swift.String, parameters: [Swift.String : Any]) -> Foundation.Data?
@@ -464,12 +492,17 @@ public protocol StoreSelectionDelegate {
   @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, heightForRowAt indexPath: Foundation.IndexPath) -> CoreGraphics.CGFloat
   @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, heightForHeaderInSection section: Swift.Int) -> CoreGraphics.CGFloat
   @objc override dynamic public func prepare(for segue: UIKit.UIStoryboardSegue, sender: Any?)
-  @objc deinit
   @objc override dynamic public init(style: UIKit.UITableView.Style)
   @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
   @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+extension ExploreViewController : MapstedUiComponents.MapstedSearchDelegate {
+  public func startSearch()
+  public func stopSearch()
 }
 extension ExploreViewController : UIKit.UISearchBarDelegate {
+  @objc dynamic public func searchBarTextDidBeginEditing(_ searchBar: UIKit.UISearchBar)
   @objc dynamic public func searchBar(_ searchBar: UIKit.UISearchBar, textDidChange searchText: Swift.String)
   @objc dynamic public func searchBarCancelButtonClicked(_ searchBar: UIKit.UISearchBar)
   @objc dynamic public func searchBarSearchButtonClicked(_ searchBar: UIKit.UISearchBar)
@@ -507,8 +540,8 @@ extension ComTabBarController : MapstedMapUi.MNFeedbackDelegate {
   public func encode(to encoder: Swift.Encoder) throws
 }
 @_hasMissingDesignatedInitializers public class StoreItem : Swift.Codable {
-  @objc deinit
   required public init(from decoder: Swift.Decoder) throws
+  @objc deinit
   public func encode(to encoder: Swift.Encoder) throws
 }
 extension StoreItem : Swift.Comparable {
@@ -520,59 +553,59 @@ extension StoreItem : Swift.Comparable {
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @IBDesignable open class HeaderTitleLabel : UIKit.UILabel {
-  @objc dynamic public convenience init()
+  @objc convenience dynamic public init()
   @objc override dynamic public init(frame: CoreGraphics.CGRect)
   @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
   @objc override dynamic open var text: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers public class DisclaimerMessage : CoreData.NSManagedObject {
-  @objc deinit
   @objc override dynamic public init(entity: CoreData.NSEntityDescription, insertInto context: CoreData.NSManagedObjectContext?)
+  @objc deinit
 }
 extension DisclaimerMessage {
   @nonobjc public class func fetchRequest() -> CoreData.NSFetchRequest<MapstedUiComponents.DisclaimerMessage>
   @objc @NSManaged dynamic public var customMessage: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var messageAfter: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var messageBefore: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var messageId: Swift.Int32 {
     @objc get
-    @objc set(value)
+    @objc set
   }
 }
 @objc @_inheritsConvenienceInitializers public class PropertyMessageMap : CoreData.NSManagedObject {
-  @objc deinit
   @objc override dynamic public init(entity: CoreData.NSEntityDescription, insertInto context: CoreData.NSManagedObjectContext?)
+  @objc deinit
 }
 extension PropertyMessageMap {
   @nonobjc public class func fetchRequest() -> CoreData.NSFetchRequest<MapstedUiComponents.PropertyMessageMap>
   @objc @NSManaged dynamic public var isShown: Swift.Bool {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var isSyncedWithServer: Swift.Bool {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var messageId: Swift.Int32 {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var propertyId: Swift.Int32 {
     @objc get
-    @objc set(value)
+    @objc set
   }
 }
 @objc @_inheritsConvenienceInitializers public class Tag : CoreData.NSManagedObject {
@@ -583,30 +616,37 @@ extension Tag {
   @nonobjc public class func fetchRequest() -> CoreData.NSFetchRequest<MapstedUiComponents.Tag>
   @objc @NSManaged dynamic public var buildingId: Swift.Int32 {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var floorId: Swift.Int32 {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var mercatorX: Swift.Double {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var mercatorY: Swift.Double {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var name: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var propertyId: Swift.Int32 {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var timestamp: Swift.Double {
     @objc get
-    @objc set(value)
+    @objc set
   }
 }
+extension MapstedUiComponents.SearchStyle : Swift.Equatable {}
+extension MapstedUiComponents.SearchStyle : Swift.Hashable {}
+extension MapstedUiComponents.KeywordCellLayout.LayoutAlignment : Swift.Equatable {}
+extension MapstedUiComponents.KeywordCellLayout.LayoutAlignment : Swift.Hashable {}
+extension MapstedUiComponents.KeywordCellLayout.LayoutAlignment : Swift.RawRepresentable {}
+extension MapstedUiComponents.BaseMapStyle : Swift.Equatable {}
+extension MapstedUiComponents.BaseMapStyle : Swift.Hashable {}
