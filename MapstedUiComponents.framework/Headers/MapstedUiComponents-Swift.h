@@ -526,6 +526,7 @@ SWIFT_CLASS("_TtC19MapstedUiComponents18HomeViewController")
 
 
 
+
 @interface HomeViewController (SWIFT_EXTENSION(MapstedUiComponents)) <UISearchBarDelegate>
 - (void)searchBarTextDidBeginEditing:(UISearchBar * _Nonnull)searchBar;
 - (void)searchBar:(UISearchBar * _Nonnull)searchBar textDidChange:(NSString * _Nonnull)searchText;
@@ -547,6 +548,7 @@ SWIFT_CLASS("_TtC19MapstedUiComponents18HomeViewController")
 /// The number of rows to be displayed in each section
 - (NSInteger)tableView:(UITableView * _Nonnull)tableView numberOfRowsInSection:(NSInteger)section SWIFT_WARN_UNUSED_RESULT;
 - (CGFloat)tableView:(UITableView * _Nonnull)tableView heightForFooterInSection:(NSInteger)section SWIFT_WARN_UNUSED_RESULT;
+- (UIView * _Nullable)tableView:(UITableView * _Nonnull)tableView viewForFooterInSection:(NSInteger)section SWIFT_WARN_UNUSED_RESULT;
 - (UIView * _Nullable)tableView:(UITableView * _Nonnull)tableView viewForHeaderInSection:(NSInteger)section SWIFT_WARN_UNUSED_RESULT;
 - (CGFloat)tableView:(UITableView * _Nonnull)tableView heightForHeaderInSection:(NSInteger)section SWIFT_WARN_UNUSED_RESULT;
 - (CGFloat)tableView:(UITableView * _Nonnull)tableView heightForRowAtIndexPath:(NSIndexPath * _Nonnull)indexPath SWIFT_WARN_UNUSED_RESULT;
@@ -715,6 +717,7 @@ SWIFT_CLASS("_TtC19MapstedUiComponents18UIBoundaryCheckApi")
 - (void)locationManager:(CLLocationManager * _Nonnull)manager didExitRegion:(CLRegion * _Nonnull)region;
 - (void)locationManager:(CLLocationManager * _Nonnull)manager didVisit:(CLVisit * _Nonnull)visit;
 @end
+
 
 
 

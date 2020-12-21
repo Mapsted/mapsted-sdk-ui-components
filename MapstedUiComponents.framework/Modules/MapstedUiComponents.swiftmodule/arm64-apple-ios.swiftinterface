@@ -194,6 +194,7 @@ extension HomeViewController {
   @objc override dynamic public func numberOfSections(in tableView: UIKit.UITableView) -> Swift.Int
   @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, numberOfRowsInSection section: Swift.Int) -> Swift.Int
   @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, heightForFooterInSection section: Swift.Int) -> CoreGraphics.CGFloat
+  @objc override dynamic open func tableView(_ tableView: UIKit.UITableView, viewForFooterInSection section: Swift.Int) -> UIKit.UIView?
   @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, viewForHeaderInSection section: Swift.Int) -> UIKit.UIView?
   @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, heightForHeaderInSection section: Swift.Int) -> CoreGraphics.CGFloat
   @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, heightForRowAt indexPath: Foundation.IndexPath) -> CoreGraphics.CGFloat
@@ -435,7 +436,10 @@ public enum BaseMapStyle {
 }
 @_hasMissingDesignatedInitializers public class UICoreApi {
   public static let shared: MapstedUiComponents.UICoreApi
-  public var restrictPanningToProperty: Swift.Bool
+  public var restrictPanningToProperty: Swift.Bool {
+    get
+    set
+  }
   public var enableFeedsOutdoor: Swift.Bool
   public var enableFeedsIndoor: Swift.Bool
   public var enableEventsOutdoor: Swift.Bool
