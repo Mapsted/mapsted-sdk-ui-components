@@ -1,5 +1,5 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.3.1 (swiftlang-1200.0.41 clang-1200.0.32.8)
+// swift-compiler-version: Apple Swift version 5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)
 // swift-module-flags: -target arm64-apple-ios12.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name MapstedUiComponents
 import Alamofire
 import Alamofire_Synchronous
@@ -11,11 +11,13 @@ import Contacts
 import CoreBluetooth
 import CoreData
 import CoreGraphics
+import CoreLocation
 import FBSDKLoginKit
 import FacebookLogin
 import FlagPhoneNumber
 import Foundation
 import GoogleSignIn
+import LocMarketing
 import MapstedCore
 import MapstedMap
 import MapstedMapUi
@@ -50,10 +52,17 @@ extension FavoritesViewModel {
   @objc dynamic public func singleSearch(text: Swift.String)
 }
 @objc @_inheritsConvenienceInitializers public class StartViewController : MapstedUiComponents.ComActionViewController {
+  public var notificationEntity: LocMarketing.EntityInfo?
   @objc override dynamic open func viewDidLoad()
   @objc deinit
   @objc override dynamic open func viewDidAppear(_ animated: Swift.Bool)
   @objc override dynamic open func viewWillAppear(_ animated: Swift.Bool)
+  @objc override dynamic open func prepare(for segue: UIKit.UIStoryboardSegue, sender: Any?)
+  @objc override dynamic public init(style: UIKit.UITableView.Style)
+  @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+}
+extension StartViewController {
   @objc override dynamic open func tableView(_ tableView: UIKit.UITableView, willDisplay cell: UIKit.UITableViewCell, forRowAt indexPath: Foundation.IndexPath)
   @objc override dynamic open func numberOfSections(in tableView: UIKit.UITableView) -> Swift.Int
   @objc override dynamic open func tableView(_ tableView: UIKit.UITableView, numberOfRowsInSection section: Swift.Int) -> Swift.Int
@@ -64,10 +73,6 @@ extension FavoritesViewModel {
   @objc override dynamic open func tableView(_ tableView: UIKit.UITableView, cellForRowAt indexPath: Foundation.IndexPath) -> UIKit.UITableViewCell
   @objc override dynamic open func tableView(_ tableView: UIKit.UITableView, heightForRowAt indexPath: Foundation.IndexPath) -> CoreGraphics.CGFloat
   @objc override dynamic open func tableView(_ tableView: UIKit.UITableView, didSelectRowAt indexPath: Foundation.IndexPath)
-  @objc override dynamic open func prepare(for segue: UIKit.UIStoryboardSegue, sender: Any?)
-  @objc override dynamic public init(style: UIKit.UITableView.Style)
-  @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
-  @objc required dynamic public init?(coder: Foundation.NSCoder)
 }
 extension StartViewController : MapstedUiComponents.MapstedSearchDelegate {
   public func startSearch()
@@ -86,6 +91,14 @@ extension StartViewController : MapstedCore.MNPositionDelegate {
   public func addNearbyProperties(propertyIds: Swift.Set<Swift.Int>)
   public func removeNearbyProperties(propertyIds: Swift.Set<Swift.Int>)
   public func setPositionVisibility(visible: Swift.Bool)
+}
+extension StartViewController {
+  public func selectEntityInfo(propertyId: Swift.Int, buildingId: Swift.Int, entityId: Swift.Int, downloadDataFirst: Swift.Bool = false)
+  public func selectEntityInfo(propertyId: Swift.Int, homeEntities: [LocMarketing.EntityInfo], downloadDataFirst: Swift.Bool = false)
+}
+extension StartViewController : LocMarketing.InAppNotifyDelegate {
+  public func leftButtonClicked(action: LocMarketing.CallToAction?)
+  public func rightButtonClicked(propertyId: Swift.Int?, buildingId: Swift.Int?, entityid: Swift.Int?)
 }
 @objc @_inheritsConvenienceInitializers open class ContactsViewModel : ObjectiveC.NSObject {
   @objc override dynamic public init()
@@ -166,6 +179,9 @@ public let home_model: MapstedUiComponents.HomeViewModel
 }
 extension HomeViewModel {
   public func search(text: Swift.String)
+  public var searchEntityGroups: [MapstedCore.CMSSearchEntityGroup] {
+    get
+  }
   @objc dynamic public func singleSearch(text: Swift.String)
   public func updateMall(mall: __ObjC.MNPropertyInfo?)
 }
@@ -182,7 +198,6 @@ extension KeywordCellLayout {
   @objc override dynamic public func viewWillAppear(_ animated: Swift.Bool)
   @objc override dynamic public func viewDidAppear(_ animated: Swift.Bool)
   @objc override dynamic public func viewWillDisappear(_ animated: Swift.Bool)
-  @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, cellForRowAt indexPath: Foundation.IndexPath) -> UIKit.UITableViewCell
   @objc override dynamic public func prepare(for segue: UIKit.UIStoryboardSegue, sender: Any?)
   @objc deinit
   @objc override dynamic public init(style: UIKit.UITableView.Style)
@@ -200,39 +215,28 @@ extension HomeViewController {
   @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, heightForRowAt indexPath: Foundation.IndexPath) -> CoreGraphics.CGFloat
   @objc override dynamic open func tableView(_ tableView: UIKit.UITableView, didSelectRowAt indexPath: Foundation.IndexPath)
 }
+extension HomeViewController : MapstedUiComponents.MapstedSearchDelegate {
+  public func startSearch()
+  public func stopSearch()
+}
 extension HomeViewController : UIKit.UISearchBarDelegate {
   @objc dynamic public func searchBarTextDidBeginEditing(_ searchBar: UIKit.UISearchBar)
   @objc dynamic public func searchBar(_ searchBar: UIKit.UISearchBar, textDidChange searchText: Swift.String)
-  @objc dynamic public func searchBarTextDidEndEditing(_ searchBar: UIKit.UISearchBar)
   @objc dynamic public func searchBarCancelButtonClicked(_ searchBar: UIKit.UISearchBar)
   @objc dynamic public func searchBarSearchButtonClicked(_ searchBar: UIKit.UISearchBar)
 }
+extension HomeViewController {
+  @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, cellForRowAt indexPath: Foundation.IndexPath) -> UIKit.UITableViewCell
+}
+extension HomeViewController : LocMarketing.InAppNotifyDelegate {
+  public func leftButtonClicked(action: LocMarketing.CallToAction?)
+  public func rightButtonClicked(propertyId: Swift.Int?, buildingId: Swift.Int?, entityid: Swift.Int?)
+}
+extension HomeViewController {
+  public func viewEntityInfo(propertyId: Swift.Int, buildingId: Swift.Int, entityId: Swift.Int)
+}
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class CategoryTreeViewModel : ObjectiveC.NSObject {
   public static let shared: MapstedUiComponents.CategoryTreeViewModel
-  @objc deinit
-}
-public protocol MapstedSearchDelegate {
-  func startSearch()
-  func stopSearch()
-}
-public enum SearchStyle {
-  case TitleAndButton
-  case SearchBoxAndButton
-  public static func == (a: MapstedUiComponents.SearchStyle, b: MapstedUiComponents.SearchStyle) -> Swift.Bool
-  public var hashValue: Swift.Int {
-    get
-  }
-  public func hash(into hasher: inout Swift.Hasher)
-}
-@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class MapstedSearchView : UIKit.UIView {
-  @objc override dynamic public init(frame: CoreGraphics.CGRect)
-  public func setSearchBarDelegate(delegate: UIKit.UISearchBarDelegate)
-  public func setSearchStyle(to searchStyle: MapstedUiComponents.SearchStyle)
-  public func setTitle(to text: Swift.String?)
-  public func setMapstedSearchDelegate(delegate: MapstedUiComponents.MapstedSearchDelegate)
-  public func setSearchPlaceholder(toString placeholder: Swift.String)
-  public func hideSearch()
-  public func showSearch()
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @IBDesignable open class BadgeNumberLabel : UIKit.UILabel {
@@ -282,6 +286,34 @@ public enum SearchStyle {
   @objc override dynamic open func prepareForInterfaceBuilder()
   @objc deinit
 }
+public protocol MapstedSearchDelegate {
+  func startSearch()
+  func stopSearch()
+}
+public enum SearchStyle {
+  case TitleAndButton
+  case SearchBoxAndButton
+  case ButtonOnly
+  public static func == (a: MapstedUiComponents.SearchStyle, b: MapstedUiComponents.SearchStyle) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+  public func hash(into hasher: inout Swift.Hasher)
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class MapstedSearchView : UIKit.UIView {
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  public func setSearchBarDelegate(delegate: UIKit.UISearchBarDelegate)
+  public func setFontSize(to newSize: CoreGraphics.CGFloat)
+  public func setSearchButtonTint(to newColor: UIKit.UIColor)
+  public func setSearchStyle(to searchStyle: MapstedUiComponents.SearchStyle)
+  public func setTitle(to text: Swift.String?)
+  public func setMapstedSearchDelegate(delegate: MapstedUiComponents.MapstedSearchDelegate)
+  public func setSearchPlaceholder(toString placeholder: Swift.String)
+  public func setBackgroundColor(to color: UIKit.UIColor? = nil, alpha: CoreGraphics.CGFloat = 1.0)
+  public func hideSearch()
+  public func showSearch()
+  @objc deinit
+}
 @objc @_inheritsConvenienceInitializers public class KeywordCellLayout : UIKit.UICollectionViewLayout {
   public init(alignment: MapstedUiComponents.KeywordCellLayout.LayoutAlignment = .left, delegate: MapstedUiComponents.KeywordCellLayoutDelegate?)
   @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
@@ -294,7 +326,7 @@ public enum SearchStyle {
   @objc deinit
 }
 public protocol CategorySelectionDelegate {
-  func selectedCategory(category: __ObjC.MNCategory)
+  func selectedCategory(category: MapstedCore.MNCategory)
 }
 @objc @_inheritsConvenienceInitializers public class CategoryCarouselViewController : UIKit.UIViewController {
   public static func instantiateViewController(propertyInfo: __ObjC.MNPropertyInfo, categoryUIDs: [Swift.String], alignmentIsVertical: Swift.Bool = false, delegate: MapstedUiComponents.CategorySelectionDelegate) -> UIKit.UIViewController?
@@ -328,7 +360,6 @@ extension CategoryCarouselViewController : UIKit.UICollectionViewDelegateFlowLay
   @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, numberOfRowsInSection section: Swift.Int) -> Swift.Int
   @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, cellForRowAt indexPath: Foundation.IndexPath) -> UIKit.UITableViewCell
   @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, heightForRowAt indexPath: Foundation.IndexPath) -> CoreGraphics.CGFloat
-  @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, didSelectRowAt indexPath: Foundation.IndexPath)
   @objc override dynamic public func prepare(for segue: UIKit.UIStoryboardSegue, sender: Any?)
   @objc deinit
   @objc override dynamic public init(style: UIKit.UITableView.Style)
@@ -336,8 +367,12 @@ extension CategoryCarouselViewController : UIKit.UICollectionViewDelegateFlowLay
   @objc required dynamic public init?(coder: Foundation.NSCoder)
 }
 extension FeedViewController {
-  public func keywordIsBeingAdded(name: MapstedUiComponents.Category?)
-  public func keywordIsBeingRemoved(name: MapstedUiComponents.Category?)
+  public func keywordIsBeingAdded(name: MapstedCore.CMSCategory?)
+  public func keywordIsBeingRemoved(name: MapstedCore.CMSCategory?)
+}
+extension FeedViewController : LocMarketing.InAppNotifyDelegate {
+  public func leftButtonClicked(action: LocMarketing.CallToAction?)
+  public func rightButtonClicked(propertyId: Swift.Int?, buildingId: Swift.Int?, entityid: Swift.Int?)
 }
 extension UIDevice {
   public static let modelName: Swift.String
@@ -363,13 +398,18 @@ extension KeywordCellLayout {
   }
 }
 public class Category {
-  public init(category: __ObjC.MNCategory)
+  public init(category: MapstedCore.CMSCategory)
   public func loadStores(completed: (([MapstedUiComponents.StoreItem]) -> ())?)
   @objc deinit
+}
+public struct SearchResultGroup {
 }
 @objc @_inheritsConvenienceInitializers open class StartViewModel : MapstedUiComponents.SharedViewModel {
   @objc override dynamic public init()
   @objc deinit
+}
+extension StartViewModel : MapstedCore.CategoriesDelegate {
+  public func refreshCategories()
 }
 public protocol KeywordCellLayoutDelegate : ObjectiveC.NSObjectProtocol {
   func keywordCellLayoutTagSize(layout: MapstedUiComponents.KeywordCellLayout, atIndex index: Swift.Int) -> CoreGraphics.CGSize
@@ -379,6 +419,7 @@ public protocol KeywordCellLayoutDelegate : ObjectiveC.NSObjectProtocol {
 @objc @_inheritsConvenienceInitializers public class ComActionViewController : MapstedUiComponents.BaseViewController {
   @objc override dynamic open func viewDidLoad()
   @objc override dynamic open func viewWillAppear(_ animated: Swift.Bool)
+  public func viewItem(propertyId: Swift.Int, buildingId: Swift.Int, entityId: Swift.Int)
   @objc override dynamic public init(style: UIKit.UITableView.Style)
   @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
   @objc required dynamic public init?(coder: Foundation.NSCoder)
@@ -399,11 +440,21 @@ public protocol KeywordCellLayoutDelegate : ObjectiveC.NSObjectProtocol {
   @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
   @objc required dynamic public init?(coder: Foundation.NSCoder)
 }
+extension MapViewController : LocMarketing.InAppNotifyDelegate {
+  public func leftButtonClicked(action: LocMarketing.CallToAction?)
+  public func rightButtonClicked(propertyId: Swift.Int?, buildingId: Swift.Int?, entityid: Swift.Int?)
+}
 extension UIViewController {
   public func add(_ child: UIKit.UIViewController, toView view: UIKit.UIView)
   public func remove()
 }
+extension CMSCategory {
+  public func loadStores(properties: [Swift.Int], completed: (([MapstedUiComponents.StoreItem]) -> ())?)
+}
 public struct FavoriteEntity {
+}
+extension LocMarketingManager {
+  public func fetchCampaignsForFeed(propertyId: Swift.Int, completion: (([LocMarketing.Campaign]?) -> Swift.Void)? = nil)
 }
 @objc @_hasMissingDesignatedInitializers public class Region : ObjectiveC.NSObject, Foundation.NSCoding {
   @objc public func encode(with coder: Foundation.NSCoder)
@@ -446,6 +497,7 @@ public enum BaseMapStyle {
   public var enableEventsIndoor: Swift.Bool
   public var enableBuildingsOutdoor: Swift.Bool
   public var enableBuildingsIndoor: Swift.Bool
+  public var enableDisclaimer: Swift.Bool
   public var enableUserProfiles: Swift.Bool
   public var useGeoJSONLayers: Swift.Bool
   public var nameOfGeoJSONStyleAsset: Swift.String
@@ -453,6 +505,7 @@ public enum BaseMapStyle {
   public func rootViewController() -> UIKit.UINavigationController
   public func splashViewController(copyrightText: Swift.String, animationGif: Swift.String) -> UIKit.UIViewController
   public func setupUI()
+  public func updateAppLaunchCount()
   public func acceptShareLocation(response: UserNotifications.UNNotificationResponse)
   public func denyShareLocation(response: UserNotifications.UNNotificationResponse)
   @objc deinit
@@ -482,7 +535,7 @@ public protocol StoreSelectionDelegate {
   func selectedStore(propertyId: Swift.Int, buildingId: Swift.Int, entityId: Swift.Int)
 }
 @objc @_inheritsConvenienceInitializers public class ExploreViewController : MapstedUiComponents.ComActionViewController {
-  public static func instantiateViewController(propertyInfo: __ObjC.MNPropertyInfo, category: __ObjC.MNCategory, selectStoreDelegate: MapstedUiComponents.StoreSelectionDelegate) -> UIKit.UIViewController?
+  public static func instantiateViewController(propertyInfo: __ObjC.MNPropertyInfo, category: MapstedCore.CMSCategory, selectStoreDelegate: MapstedUiComponents.StoreSelectionDelegate) -> UIKit.UIViewController?
   @objc override dynamic public func viewDidLoad()
   @objc override dynamic public func viewWillAppear(_ animated: Swift.Bool)
   @objc override dynamic public func viewWillDisappear(_ animated: Swift.Bool)
@@ -510,6 +563,10 @@ extension ExploreViewController : UIKit.UISearchBarDelegate {
   @objc dynamic public func searchBar(_ searchBar: UIKit.UISearchBar, textDidChange searchText: Swift.String)
   @objc dynamic public func searchBarCancelButtonClicked(_ searchBar: UIKit.UISearchBar)
   @objc dynamic public func searchBarSearchButtonClicked(_ searchBar: UIKit.UISearchBar)
+}
+extension ExploreViewController : LocMarketing.InAppNotifyDelegate {
+  public func leftButtonClicked(action: LocMarketing.CallToAction?)
+  public func rightButtonClicked(propertyId: Swift.Int?, buildingId: Swift.Int?, entityid: Swift.Int?)
 }
 @_hasMissingDesignatedInitializers open class MQTTConnectionInfo : Swift.Decodable {
   @objc deinit
@@ -542,6 +599,9 @@ extension ComTabBarController : MapstedMapUi.MNFeedbackDelegate {
   @objc deinit
   required public init(from decoder: Swift.Decoder) throws
   public func encode(to encoder: Swift.Encoder) throws
+}
+@_hasMissingDesignatedInitializers public class CMSZone {
+  @objc deinit
 }
 @_hasMissingDesignatedInitializers public class StoreItem : Swift.Codable {
   required public init(from decoder: Swift.Decoder) throws
