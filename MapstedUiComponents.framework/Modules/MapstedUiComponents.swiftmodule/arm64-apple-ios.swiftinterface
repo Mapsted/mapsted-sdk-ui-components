@@ -17,7 +17,7 @@ import FacebookLogin
 import FlagPhoneNumber
 import Foundation
 import GoogleSignIn
-import LocMarketing
+import LocationMarketing
 import MapstedCore
 import MapstedMap
 import MapstedMapUi
@@ -52,7 +52,7 @@ extension FavoritesViewModel {
   @objc dynamic public func singleSearch(text: Swift.String)
 }
 @objc @_inheritsConvenienceInitializers public class StartViewController : MapstedUiComponents.ComActionViewController {
-  public var notificationEntity: LocMarketing.EntityInfo?
+  public var notificationEntity: LocationMarketing.EntityInfo?
   @objc override dynamic open func viewDidLoad()
   @objc deinit
   @objc override dynamic open func viewDidAppear(_ animated: Swift.Bool)
@@ -94,11 +94,10 @@ extension StartViewController : MapstedCore.MNPositionDelegate {
 }
 extension StartViewController {
   public func selectEntityInfo(propertyId: Swift.Int, buildingId: Swift.Int, entityId: Swift.Int, downloadDataFirst: Swift.Bool = false)
-  public func selectEntityInfo(propertyId: Swift.Int, homeEntities: [LocMarketing.EntityInfo], downloadDataFirst: Swift.Bool = false)
+  public func selectEntityInfo(propertyId: Swift.Int, homeEntities: [LocationMarketing.EntityInfo], downloadDataFirst: Swift.Bool = false)
 }
-extension StartViewController : LocMarketing.InAppNotifyDelegate {
-  public func leftButtonClicked(action: LocMarketing.CallToAction?)
-  public func rightButtonClicked(propertyId: Swift.Int?, buildingId: Swift.Int?, entityid: Swift.Int?)
+extension StartViewController : LocationMarketing.LocationMarketingNotificationDelegate {
+  public func navigateToMap(homeEntities: [LocationMarketing.EntityInfo])
 }
 @objc @_inheritsConvenienceInitializers open class ContactsViewModel : ObjectiveC.NSObject {
   @objc override dynamic public init()
@@ -228,9 +227,8 @@ extension HomeViewController : UIKit.UISearchBarDelegate {
 extension HomeViewController {
   @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, cellForRowAt indexPath: Foundation.IndexPath) -> UIKit.UITableViewCell
 }
-extension HomeViewController : LocMarketing.InAppNotifyDelegate {
-  public func leftButtonClicked(action: LocMarketing.CallToAction?)
-  public func rightButtonClicked(propertyId: Swift.Int?, buildingId: Swift.Int?, entityid: Swift.Int?)
+extension HomeViewController : LocationMarketing.LocationMarketingNotificationDelegate {
+  public func navigateToMap(homeEntities: [LocationMarketing.EntityInfo])
 }
 extension HomeViewController {
   public func viewEntityInfo(propertyId: Swift.Int, buildingId: Swift.Int, entityId: Swift.Int)
@@ -370,9 +368,8 @@ extension FeedViewController {
   public func keywordIsBeingAdded(name: MapstedCore.CMSCategory?)
   public func keywordIsBeingRemoved(name: MapstedCore.CMSCategory?)
 }
-extension FeedViewController : LocMarketing.InAppNotifyDelegate {
-  public func leftButtonClicked(action: LocMarketing.CallToAction?)
-  public func rightButtonClicked(propertyId: Swift.Int?, buildingId: Swift.Int?, entityid: Swift.Int?)
+extension FeedViewController : LocationMarketing.LocationMarketingNotificationDelegate {
+  public func navigateToMap(homeEntities: [LocationMarketing.EntityInfo])
 }
 extension UIDevice {
   public static let modelName: Swift.String
@@ -419,6 +416,7 @@ public protocol KeywordCellLayoutDelegate : ObjectiveC.NSObjectProtocol {
 @objc @_inheritsConvenienceInitializers public class ComActionViewController : MapstedUiComponents.BaseViewController {
   @objc override dynamic open func viewDidLoad()
   @objc override dynamic open func viewWillAppear(_ animated: Swift.Bool)
+  public func viewItem(homeEntities: [LocationMarketing.EntityInfo])
   public func viewItem(propertyId: Swift.Int, buildingId: Swift.Int, entityId: Swift.Int)
   @objc override dynamic public init(style: UIKit.UITableView.Style)
   @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
@@ -440,9 +438,8 @@ public protocol KeywordCellLayoutDelegate : ObjectiveC.NSObjectProtocol {
   @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
   @objc required dynamic public init?(coder: Foundation.NSCoder)
 }
-extension MapViewController : LocMarketing.InAppNotifyDelegate {
-  public func leftButtonClicked(action: LocMarketing.CallToAction?)
-  public func rightButtonClicked(propertyId: Swift.Int?, buildingId: Swift.Int?, entityid: Swift.Int?)
+extension MapViewController : LocationMarketing.LocationMarketingNotificationDelegate {
+  public func navigateToMap(homeEntities: [LocationMarketing.EntityInfo])
 }
 extension UIViewController {
   public func add(_ child: UIKit.UIViewController, toView view: UIKit.UIView)
@@ -454,7 +451,7 @@ extension CMSCategory {
 public struct FavoriteEntity {
 }
 extension LocMarketingManager {
-  public func fetchCampaignsForFeed(propertyId: Swift.Int, completion: (([LocMarketing.Campaign]?) -> Swift.Void)? = nil)
+  public func fetchCampaignsForFeed(propertyId: Swift.Int, completion: (([LocationMarketing.Campaign]?) -> Swift.Void)? = nil)
 }
 @objc @_hasMissingDesignatedInitializers public class Region : ObjectiveC.NSObject, Foundation.NSCoding {
   @objc public func encode(with coder: Foundation.NSCoder)
@@ -564,9 +561,8 @@ extension ExploreViewController : UIKit.UISearchBarDelegate {
   @objc dynamic public func searchBarCancelButtonClicked(_ searchBar: UIKit.UISearchBar)
   @objc dynamic public func searchBarSearchButtonClicked(_ searchBar: UIKit.UISearchBar)
 }
-extension ExploreViewController : LocMarketing.InAppNotifyDelegate {
-  public func leftButtonClicked(action: LocMarketing.CallToAction?)
-  public func rightButtonClicked(propertyId: Swift.Int?, buildingId: Swift.Int?, entityid: Swift.Int?)
+extension ExploreViewController : LocationMarketing.LocationMarketingNotificationDelegate {
+  public func navigateToMap(homeEntities: [LocationMarketing.EntityInfo])
 }
 @_hasMissingDesignatedInitializers open class MQTTConnectionInfo : Swift.Decodable {
   @objc deinit
