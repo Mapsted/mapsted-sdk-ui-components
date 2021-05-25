@@ -4,7 +4,6 @@
 import Alamofire
 import Alamofire_Synchronous
 import AuthenticationServices
-import CocoaLumberjack
 import CocoaMQTT
 import ColorThiefSwift
 import Contacts
@@ -22,12 +21,12 @@ import MapstedCore
 import MapstedMap
 import MapstedMapUi
 import MessageUI
+import Security
 import StoreKit
 import Swift
 import SystemConfiguration
 import UIKit
-import os.log
-import os
+import WebKit
 @objc @_inheritsConvenienceInitializers open class FavoritesViewModel : ObjectiveC.NSObject {
   @objc override dynamic public init()
   @objc deinit
@@ -95,13 +94,11 @@ extension StartViewController : MapstedCore.MNPositionDelegate {
 extension StartViewController {
   public func selectEntityInfo(propertyId: Swift.Int, buildingId: Swift.Int, entityId: Swift.Int, downloadDataFirst: Swift.Bool = false)
   public func selectEntityInfo(propertyId: Swift.Int, homeEntities: [LocationMarketing.EntityInfo], downloadDataFirst: Swift.Bool = false)
+  public func selectCampaign(propertyId: Swift.Int, campaign: LocationMarketing.Campaign, downloadDataFirst: Swift.Bool = false)
 }
-extension StartViewController : LocationMarketing.LocationMarketingNotificationDelegate {
-  public func navigateToMap(homeEntities: [LocationMarketing.EntityInfo])
-}
-@objc @_inheritsConvenienceInitializers open class ContactsViewModel : ObjectiveC.NSObject {
-  @objc override dynamic public init()
-  @objc deinit
+extension StartViewController : LocationMarketing.MarketingBannerDelegate {
+  public func showCampaign(campaignId: Swift.String)
+  public func closeBanner()
 }
 @objc @_inheritsConvenienceInitializers open class DropDownTextField : UIKit.UITextField {
   public var selectedIndex: Swift.Int?
@@ -227,8 +224,9 @@ extension HomeViewController : UIKit.UISearchBarDelegate {
 extension HomeViewController {
   @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, cellForRowAt indexPath: Foundation.IndexPath) -> UIKit.UITableViewCell
 }
-extension HomeViewController : LocationMarketing.LocationMarketingNotificationDelegate {
-  public func navigateToMap(homeEntities: [LocationMarketing.EntityInfo])
+extension HomeViewController : LocationMarketing.MarketingBannerDelegate {
+  public func showCampaign(campaignId: Swift.String)
+  public func closeBanner()
 }
 extension HomeViewController {
   public func viewEntityInfo(propertyId: Swift.Int, buildingId: Swift.Int, entityId: Swift.Int)
@@ -353,11 +351,8 @@ extension CategoryCarouselViewController : UIKit.UICollectionViewDelegateFlowLay
   @objc override dynamic public func viewDidLoad()
   @objc override dynamic public func viewWillAppear(_ animated: Swift.Bool)
   @objc override dynamic public func viewDidAppear(_ animated: Swift.Bool)
+  @objc override dynamic public func viewWillDisappear(_ animated: Swift.Bool)
   @objc override dynamic public func viewDidDisappear(_ animated: Swift.Bool)
-  @objc override dynamic public func numberOfSections(in tableView: UIKit.UITableView) -> Swift.Int
-  @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, numberOfRowsInSection section: Swift.Int) -> Swift.Int
-  @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, cellForRowAt indexPath: Foundation.IndexPath) -> UIKit.UITableViewCell
-  @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, heightForRowAt indexPath: Foundation.IndexPath) -> CoreGraphics.CGFloat
   @objc override dynamic public func prepare(for segue: UIKit.UIStoryboardSegue, sender: Any?)
   @objc deinit
   @objc override dynamic public init(style: UIKit.UITableView.Style)
@@ -365,11 +360,29 @@ extension CategoryCarouselViewController : UIKit.UICollectionViewDelegateFlowLay
   @objc required dynamic public init?(coder: Foundation.NSCoder)
 }
 extension FeedViewController {
+  @objc override dynamic public func numberOfSections(in tableView: UIKit.UITableView) -> Swift.Int
+  @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, numberOfRowsInSection section: Swift.Int) -> Swift.Int
+  @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, cellForRowAt indexPath: Foundation.IndexPath) -> UIKit.UITableViewCell
+  @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, heightForRowAt indexPath: Foundation.IndexPath) -> CoreGraphics.CGFloat
+  @objc override dynamic public func tableView(_ tableView: UIKit.UITableView, willDisplay cell: UIKit.UITableViewCell, forRowAt indexPath: Foundation.IndexPath)
+  @objc override dynamic public func scrollViewDidScroll(_ scrollView: UIKit.UIScrollView)
+}
+extension FeedViewController {
   public func keywordIsBeingAdded(name: MapstedCore.CMSCategory?)
   public func keywordIsBeingRemoved(name: MapstedCore.CMSCategory?)
 }
-extension FeedViewController : LocationMarketing.LocationMarketingNotificationDelegate {
-  public func navigateToMap(homeEntities: [LocationMarketing.EntityInfo])
+extension FeedViewController : LocationMarketing.MarketingBannerDelegate {
+  public func showCampaign(campaignId: Swift.String)
+  public func closeBanner()
+}
+extension FeedViewController : LocationMarketing.LocationMarketingCreativeDelegate {
+  public func dismiss(action: LocationMarketing.CallToAction?)
+  public func openWebsite(websiteURL: Swift.String) -> Swift.Bool
+  public func directToGlobal(campaign: LocationMarketing.Campaign)
+  public func viewOnMap(homeEntities: [LocationMarketing.EntityInfo])
+}
+extension UITextView {
+  @objc override dynamic open func point(inside point: CoreGraphics.CGPoint, with event: UIKit.UIEvent?) -> Swift.Bool
 }
 extension UIDevice {
   public static let modelName: Swift.String
@@ -441,6 +454,12 @@ public protocol KeywordCellLayoutDelegate : ObjectiveC.NSObjectProtocol {
 extension MapViewController : LocationMarketing.LocationMarketingNotificationDelegate {
   public func navigateToMap(homeEntities: [LocationMarketing.EntityInfo])
 }
+extension MapViewController : LocationMarketing.LocationMarketingCreativeDelegate {
+  public func dismiss(action: LocationMarketing.CallToAction?)
+  public func openWebsite(websiteURL: Swift.String) -> Swift.Bool
+  public func directToGlobal(campaign: LocationMarketing.Campaign)
+  public func viewOnMap(homeEntities: [LocationMarketing.EntityInfo])
+}
 extension UIViewController {
   public func add(_ child: UIKit.UIViewController, toView view: UIKit.UIView)
   public func remove()
@@ -450,32 +469,16 @@ extension CMSCategory {
 }
 public struct FavoriteEntity {
 }
+public protocol PageViewDelegate {
+  func advanceToNext(viewController: UIKit.UIViewController)
+}
 extension LocMarketingManager {
   public func fetchCampaignsForFeed(propertyId: Swift.Int, completion: (([LocationMarketing.Campaign]?) -> Swift.Void)? = nil)
 }
-@objc @_hasMissingDesignatedInitializers public class Region : ObjectiveC.NSObject, Foundation.NSCoding {
-  @objc public func encode(with coder: Foundation.NSCoder)
-  @objc required public init?(coder: Foundation.NSCoder)
-  @objc deinit
-  @objc override dynamic public init()
-}
-@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers open class UIBoundaryCheckApi : ObjectiveC.NSObject {
-  public static let shared: MapstedUiComponents.UIBoundaryCheckApi
-  @objc deinit
-  public func boundaryCheck(launchOptions: [UIKit.UIApplication.LaunchOptionsKey : Any]?)
-  public func addBoundary(regionId: Swift.Int, polygons: [__ObjC.MNMercator]?, centroid: __ObjC.MNMercator?)
-  public func removeBoundary(regionId: Swift.Int)
-}
-extension UIBoundaryCheckApi : CoreLocation.CLLocationManagerDelegate {
-  @objc dynamic public func locationManager(_ manager: CoreLocation.CLLocationManager, didUpdateLocations locations: [CoreLocation.CLLocation])
-  @objc dynamic public func locationManager(_ manager: CoreLocation.CLLocationManager, didEnterRegion region: CoreLocation.CLRegion)
-  @objc dynamic public func locationManager(_ manager: CoreLocation.CLLocationManager, didExitRegion region: CoreLocation.CLRegion)
-  @objc dynamic public func locationManager(_ manager: CoreLocation.CLLocationManager, didVisit visit: CoreLocation.CLVisit)
-}
 public enum BaseMapStyle {
-  case DEFAULT
   case DARK
   case LIGHT
+  case DEFAULT
   public static func == (a: MapstedUiComponents.BaseMapStyle, b: MapstedUiComponents.BaseMapStyle) -> Swift.Bool
   public var hashValue: Swift.Int {
     get
@@ -488,13 +491,15 @@ public enum BaseMapStyle {
     get
     set
   }
+  public var showWelcomeScreen: Swift.Bool
+  public var enablePropertyFilter: Swift.Bool
   public var enableFeedsOutdoor: Swift.Bool
   public var enableFeedsIndoor: Swift.Bool
   public var enableEventsOutdoor: Swift.Bool
   public var enableEventsIndoor: Swift.Bool
   public var enableBuildingsOutdoor: Swift.Bool
   public var enableBuildingsIndoor: Swift.Bool
-  public var enableDisclaimer: Swift.Bool
+  public var requireClientLogin: Swift.Bool
   public var enableUserProfiles: Swift.Bool
   public var useGeoJSONLayers: Swift.Bool
   public var nameOfGeoJSONStyleAsset: Swift.String
@@ -512,6 +517,7 @@ extension String {
   public func localizedMain(_ defaultString: Swift.String) -> Swift.String
 }
 @objc @_inheritsConvenienceInitializers public class BaseViewController : UIKit.UITableViewController {
+  @objc override dynamic public func viewDidAppear(_ animated: Swift.Bool)
   @objc override dynamic open func viewDidLoad()
   @objc override dynamic open func viewWillAppear(_ animated: Swift.Bool)
   @objc override dynamic public init(style: UIKit.UITableView.Style)
@@ -561,8 +567,9 @@ extension ExploreViewController : UIKit.UISearchBarDelegate {
   @objc dynamic public func searchBarCancelButtonClicked(_ searchBar: UIKit.UISearchBar)
   @objc dynamic public func searchBarSearchButtonClicked(_ searchBar: UIKit.UISearchBar)
 }
-extension ExploreViewController : LocationMarketing.LocationMarketingNotificationDelegate {
-  public func navigateToMap(homeEntities: [LocationMarketing.EntityInfo])
+extension ExploreViewController : LocationMarketing.MarketingBannerDelegate {
+  public func showCampaign(campaignId: Swift.String)
+  public func closeBanner()
 }
 @_hasMissingDesignatedInitializers open class MQTTConnectionInfo : Swift.Decodable {
   @objc deinit

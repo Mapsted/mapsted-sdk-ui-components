@@ -190,7 +190,6 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #endif
 @import CoreData;
 @import CoreGraphics;
-@import CoreLocation;
 @import Foundation;
 @import ObjectiveC;
 @import UIKit;
@@ -255,6 +254,7 @@ SWIFT_CLASS("_TtC19MapstedUiComponents16BadgeNumberLabel")
 
 SWIFT_CLASS("_TtC19MapstedUiComponents18BaseViewController")
 @interface BaseViewController : UITableViewController
+- (void)viewDidAppear:(BOOL)animated;
 - (void)viewDidLoad;
 - (void)viewWillAppear:(BOOL)animated;
 - (nonnull instancetype)initWithStyle:(UITableViewStyle)style OBJC_DESIGNATED_INITIALIZER;
@@ -330,6 +330,8 @@ SWIFT_CLASS("_TtC19MapstedUiComponents19ComTabBarController")
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
 @end
 
+
+
 @class UITabBar;
 @class UITabBarItem;
 
@@ -337,14 +339,6 @@ SWIFT_CLASS("_TtC19MapstedUiComponents19ComTabBarController")
 - (void)tabBar:(UITabBar * _Nonnull)tabBar didSelectItem:(UITabBarItem * _Nonnull)item;
 @end
 
-
-
-
-
-SWIFT_CLASS("_TtC19MapstedUiComponents17ContactsViewModel")
-@interface ContactsViewModel : NSObject
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
-@end
 
 @class NSEntityDescription;
 @class NSManagedObjectContext;
@@ -463,11 +457,8 @@ SWIFT_CLASS("_TtC19MapstedUiComponents18FeedViewController")
 - (void)viewDidLoad;
 - (void)viewWillAppear:(BOOL)animated;
 - (void)viewDidAppear:(BOOL)animated;
+- (void)viewWillDisappear:(BOOL)animated;
 - (void)viewDidDisappear:(BOOL)animated;
-- (NSInteger)numberOfSectionsInTableView:(UITableView * _Nonnull)tableView SWIFT_WARN_UNUSED_RESULT;
-- (NSInteger)tableView:(UITableView * _Nonnull)tableView numberOfRowsInSection:(NSInteger)section SWIFT_WARN_UNUSED_RESULT;
-- (UITableViewCell * _Nonnull)tableView:(UITableView * _Nonnull)tableView cellForRowAtIndexPath:(NSIndexPath * _Nonnull)indexPath SWIFT_WARN_UNUSED_RESULT;
-- (CGFloat)tableView:(UITableView * _Nonnull)tableView heightForRowAtIndexPath:(NSIndexPath * _Nonnull)indexPath SWIFT_WARN_UNUSED_RESULT;
 - (void)prepareForSegue:(UIStoryboardSegue * _Nonnull)segue sender:(id _Nullable)sender;
 - (nonnull instancetype)initWithStyle:(UITableViewStyle)style OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
@@ -480,6 +471,17 @@ SWIFT_CLASS("_TtC19MapstedUiComponents18FeedViewController")
 
 
 
+
+
+
+@interface FeedViewController (SWIFT_EXTENSION(MapstedUiComponents))
+- (NSInteger)numberOfSectionsInTableView:(UITableView * _Nonnull)tableView SWIFT_WARN_UNUSED_RESULT;
+- (NSInteger)tableView:(UITableView * _Nonnull)tableView numberOfRowsInSection:(NSInteger)section SWIFT_WARN_UNUSED_RESULT;
+- (UITableViewCell * _Nonnull)tableView:(UITableView * _Nonnull)tableView cellForRowAtIndexPath:(NSIndexPath * _Nonnull)indexPath SWIFT_WARN_UNUSED_RESULT;
+- (CGFloat)tableView:(UITableView * _Nonnull)tableView heightForRowAtIndexPath:(NSIndexPath * _Nonnull)indexPath SWIFT_WARN_UNUSED_RESULT;
+- (void)tableView:(UITableView * _Nonnull)tableView willDisplayCell:(UITableViewCell * _Nonnull)cell forRowAtIndexPath:(NSIndexPath * _Nonnull)indexPath;
+- (void)scrollViewDidScroll:(UIScrollView * _Nonnull)scrollView;
+@end
 
 
 IB_DESIGNABLE
@@ -518,10 +520,10 @@ SWIFT_CLASS("_TtC19MapstedUiComponents18HomeViewController")
 
 
 
+
 @interface HomeViewController (SWIFT_EXTENSION(MapstedUiComponents))
 - (UITableViewCell * _Nonnull)tableView:(UITableView * _Nonnull)tableView cellForRowAtIndexPath:(NSIndexPath * _Nonnull)indexPath SWIFT_WARN_UNUSED_RESULT;
 @end
-
 
 
 
@@ -616,6 +618,7 @@ SWIFT_CLASS("_TtC19MapstedUiComponents17MapViewController")
 
 
 
+
 SWIFT_CLASS("_TtC19MapstedUiComponents17MapstedSearchView")
 @interface MapstedSearchView : UIView
 - (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
@@ -634,15 +637,6 @@ SWIFT_CLASS("_TtC19MapstedUiComponents18PropertyMessageMap")
 @property (nonatomic) BOOL isSyncedWithServer;
 @property (nonatomic) int32_t messageId;
 @property (nonatomic) int32_t propertyId;
-@end
-
-
-SWIFT_CLASS("_TtC19MapstedUiComponents6Region")
-@interface Region : NSObject <NSCoding>
-- (void)encodeWithCoder:(NSCoder * _Nonnull)coder;
-- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-+ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
 
@@ -722,34 +716,21 @@ SWIFT_CLASS("_TtC19MapstedUiComponents3Tag")
 
 
 
-SWIFT_CLASS("_TtC19MapstedUiComponents18UIBoundaryCheckApi")
-@interface UIBoundaryCheckApi : NSObject
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-+ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+
+
+
+
+
+
+
+
+
+
+@class UIEvent;
+
+@interface UITextView (SWIFT_EXTENSION(MapstedUiComponents))
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent * _Nullable)event SWIFT_WARN_UNUSED_RESULT;
 @end
-
-@class CLLocationManager;
-@class CLLocation;
-@class CLRegion;
-@class CLVisit;
-
-@interface UIBoundaryCheckApi (SWIFT_EXTENSION(MapstedUiComponents)) <CLLocationManagerDelegate>
-- (void)locationManager:(CLLocationManager * _Nonnull)manager didUpdateLocations:(NSArray<CLLocation *> * _Nonnull)locations;
-- (void)locationManager:(CLLocationManager * _Nonnull)manager didEnterRegion:(CLRegion * _Nonnull)region;
-- (void)locationManager:(CLLocationManager * _Nonnull)manager didExitRegion:(CLRegion * _Nonnull)region;
-- (void)locationManager:(CLLocationManager * _Nonnull)manager didVisit:(CLVisit * _Nonnull)visit;
-@end
-
-
-
-
-
-
-
-
-
-
-
 
 
 
